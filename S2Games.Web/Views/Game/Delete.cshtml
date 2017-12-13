@@ -1,0 +1,35 @@
+﻿@model S2Games.Database.Models.Game
+
+@using Resource = S2Games.Database.Resources
+
+@{
+    ViewBag.Title = "Excluir Jogo";
+}
+
+<div class="alert alert-danger">
+    <p><strong>Atenção!</strong></p>
+    Você deseja realmente excluir este jogo?
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-body">        
+        <strong>Jogo: </strong>
+        @Html.DisplayFor(model => model.Label)
+        <br />
+        <strong>Gênero: </strong>
+        @Resource.GameStrings.ResourceManager.GetString(Model.Genre.ToString())
+    </div>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.Id)
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <a href="/Game" class="btn btn-default"><i class="glyphicon glyphicon-arrow-left"></i> Voltar</a>
+            <button type="submit" class="btn btn-danger pull-right"><i class="glyphicon glyphicon-remove"></i> Excluir</button>
+        </div>
+    </div>
+}

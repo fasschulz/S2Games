@@ -1,0 +1,26 @@
+﻿<div class="container">
+    <div class="col-lg-3 col-lg-offset-4">
+        <form action="/User/Connect" method="post">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label for="Username">Usuário</label>
+                        <input type="text" class="form-control" id="Username" name="Username" placeholder="Meu Usuário">
+                    </div>
+                    <div class="form-group">
+                        <label for="Password">Senha</label>
+                        <input type="password" class="form-control" id="Password" name="Password" placeholder="**********">
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <input type="submit" class="btn btn-success btn-group-justified" value="Conectar" onclick="ProgressBar()" />
+                </div>
+            </div>
+            <div id="pbar"></div>
+        </form>
+    </div>
+</div>
+
+<script src="~/Scripts/Views/Home/index.js"></script>

@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title S2 Games</title>
+    <link href="~/Content/bootstrap-theme.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/Theme/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="~/Content/Theme/css/freelancer.min.css" rel="stylesheet" />
+
+
+</head>
+<body>
+    <div class="container body-content">
+        <br />
+        @if (Session["ConnectedId"] == null || Session["ConnectedId"]?.ToString() == "0")
+        {
+            @NavBarHelper.NavBar();
+        }
+        else
+        {
+            @NavBarHelper.NavBar(this, Url.RouteUrl("Default"));
+        }
+
+        <br />
+        @if (ViewBag.Title != null)
+        {
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h2 class="text-center">@ViewBag.Title</h2>
+                </div>
+            </div>
+        }
+
+        @if (ViewData.ModelState.Values.Any(x => x.Errors.Count >= 1))
+        {
+            @Html.ValidationSummary(false, "Oooops, algo deu errado...", new { @class = "alert alert-block alert-danger fade in" })
+        }
+
+        @if (ViewBag.Success != null)
+        {
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="alert alert-block alert-success fade in">
+                        <strong>Sucesso!</strong>
+                        <br />
+                        @ViewBag.Success
+                    </div>
+                </div>
+            </div>
+        }
+
+        @RenderBody()
+        
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Fernando Schulz</p>
+        </footer>
+    </div>
+
+    <script src="~/Scripts/jquery-1.9.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/Theme/js/freelancer.min.js"></script>
+
+</body>
+</html>

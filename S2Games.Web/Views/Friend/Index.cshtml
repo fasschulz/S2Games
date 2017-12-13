@@ -1,0 +1,72 @@
+﻿@using PagedList
+@using PagedList.Mvc
+@using S2Games.Database.Models
+
+@{
+    ViewBag.Title = "Amigos";
+}
+
+@using (Html.BeginForm("Index", "Friend", FormMethod.Post))
+{
+    <div class="well well-sm">
+        <div class="panel-body">
+            <div class="col-lg-6">
+                <div class="input-group">
+                    <input type="text" name="Search" class="form-control" placeholder="Nome do amigo" value="@ViewBag.Search" />
+                    <span class="input-group-btn">
+                        <button style="font-size:13.3px" class="btn btn-default" type="submit">Pesquisar</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+<div class="panel panel-default">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Nome do amigo</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var friend in ViewBag.FriendsPagedList)
+            {
+                <tr>
+                    <td class="col-lg-1">@friend.Id</td>
+                    <td class="col-lg-8">@friend.Name</td>
+                    <td class="col-lg-2">
+                        <a class="btn btn-default pull-right" href="/Friend/Edit/@friend.Id"><span class="glyphicon glyphicon-edit"></span> Editar</a>
+                    </td>
+                    <td class="col-lg-1">
+                        <a class="btn btn-danger pull-right" href="/Friend/Delete/@friend.Id"><span class="glyphicon glyphicon-trash"></span></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="6">
+                    <div class="pull-right">
+                        <ul class="pagination">
+                            @Html.PagedListPager((IPagedList)ViewBag.FriendsPagedList, page => Url.Action("Index", "Friend", new { page }))
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <a class="btn btn-default" href="/Game"><i class="glyphicon glyphicon-chevron-left"></i> Voltar</a>
+        <div class="pull-right">
+            <a class="btn btn-success" href="/Friend/Edit/"><i class="glyphicon glyphicon-file"></i> Novo</a>
+        </div>
+    </div>
+</div>

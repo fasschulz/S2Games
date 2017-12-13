@@ -1,0 +1,121 @@
+﻿@using PagedList
+@using PagedList.Mvc
+@using S2Games.Database.Models
+@using Resource = S2Games.Database.Resources
+
+@{
+    ViewBag.Title = "Jogos";    
+}
+
+@using (Html.BeginForm("Index", "Game", FormMethod.Post))
+{
+    <div class="well well-sm">
+        <div class="panel-body">
+            <div class="col-lg-6">
+                <div class="input-group">
+                    <input type="text" name="Search" class="form-control" placeholder="Nome do jogo, Nome do amigo" value="@ViewBag.Search" />
+                    <span class="input-group-btn">
+                        <button style="font-size:13.3px" class="btn btn-default" type="submit">Pesquisar</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="panel panel-default">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nome do Jogo</th>
+                <th>Gênero</th>
+                <th>Emprestado Para</th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var game in ViewBag.GamesPagedList)
+            {                    
+               string friend = game.LentFor?.Name ?? "Ninguém";
+                
+                <tr>
+                    <td class="col-lg-4">@game.Label</td>
+                    <td class="col-lg-2">@Resource.GameStrings.ResourceManager.GetString(game.Genre.ToString())</td>
+                    <td class="col-lg-3">@friend</td>
+                    <td class="col-lg-1">
+                        @if (game.LentForId != null && game.LentForId > 0)
+                        {
+                            <button class="btn btn-danger" onclick="return returnGame(@game.Id);">Devolver</button>
+                        }
+                        else
+                        {
+                            <button data-toggle="modal" data-target="#LendGamesModal" onclick="return setGameId(@game.Id);" class="btn btn-info">Emprestar</button>
+                        }
+                    </td>
+                    <td class="col-lg-1">
+                        <a class="btn btn-default pull-right" href="/Game/Edit/@game.Id"><span class="glyphicon glyphicon-edit"></span> Editar</a>
+                    </td>
+                    <td class="col-lg-1">
+                        <a class="btn btn-danger pull-right" href="/Game/Delete/@game.Id"><span class="glyphicon glyphicon-trash"></span></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="6">
+                    <div class="pull-right">
+                        <ul class="pagination">
+                            @Html.PagedListPager((IPagedList)ViewBag.GamesPagedList, page => Url.Action("Index", "Game", new { page }))
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <a href="/Game/Edit" class="btn btn-success pull-right"><span class="glyphicon glyphicon-file"></span> Novo</a>
+    </div>
+</div>
+
+<div class="modal fade" id="LendGamesModal" tabindex="-1" role="dialog" aria-labelledby="modal-title" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Emprestar Jogo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input hidden id="GameId" />
+                <label class="control-label">Amigos</label>
+                @Html.DropDownList("Friends", ViewBag.Friends as SelectList, new { @class = "form-control" })
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="return lendGame();" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span> Emprestar</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="AlertModal" tabindex="-1" role="dialog" aria-labelledby="modal-title" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">            
+            <div class="modal-body">
+                <text id="AlertContent"></text>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="javascript: location.reload();" class="btn btn-success">OK</button>                
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/Views/Game/index.js"></script>

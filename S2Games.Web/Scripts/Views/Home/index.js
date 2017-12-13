@@ -1,0 +1,5 @@
+﻿function ProgressBar()
+{
+    var pbar = '<div class=\"progress progress-striped active\"><div class=\"progress-bar progress-bar-success\"  role=\"progressbar\" aria-valuenow=\"100\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width: 100%\"></div></div>';
+    $('#pbar').html(pbar);
+}

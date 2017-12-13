@@ -1,0 +1,6 @@
+C:\Projects\S2Games\S2Games.Framework\bin\Debug\S2Games.Framework.dll
+C:\Projects\S2Games\S2Games.Framework\bin\Debug\S2Games.Framework.pdb
+C:\Projects\S2Games\S2Games.Framework\obj\Debug\S2Games.Framework.csprojResolveAssemblyReference.cache
+C:\Projects\S2Games\S2Games.Framework\obj\Debug\S2Games.Framework.csproj.CoreCompileInputs.cache
+C:\Projects\S2Games\S2Games.Framework\obj\Debug\S2Games.Framework.dll
+C:\Projects\S2Games\S2Games.Framework\obj\Debug\S2Games.Framework.pdb

@@ -1,0 +1,33 @@
+﻿@model S2Games.Database.Models.Friend
+
+@{
+    ViewBag.Title = "Remover Amigo";
+}
+
+
+<div class="alert alert-danger">
+    <p><strong>Atenção!</strong></p>
+    Você deseja realmente excluir este amigo?
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <strong>Id: </strong>
+        @Html.DisplayFor(model => model.Id)
+        <br />
+        <strong>Nome: </strong>
+        @Html.DisplayFor(model => model.Name)
+    </div>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <a href="/Friend" class="btn btn-default"><i class="glyphicon glyphicon-arrow-left"></i> Voltar</a>
+            <button type="submit" class="btn btn-danger pull-right"><i class="glyphicon glyphicon-remove"></i> Excluir</button>
+        </div>
+    </div>
+}
